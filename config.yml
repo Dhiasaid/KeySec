@@ -1,0 +1,25 @@
+# Example YAML configuration file
+
+agent_config:
+  option1: value1
+  option2: value2
+
+dashboard_config:
+  option1: value1
+  option2: value2
+
+filebeat_config:
+  option1: value1
+  option2: value2
+
+logstash_config:
+  option1: value1
+  option2: value2
+
+nginx_config:
+  option1: value1
+  option2: value2
+
+suricata_config:
+  option1: value1
+  option2: value2

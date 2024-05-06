@@ -1,0 +1,193 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block breadcrumbs %}{% endblock breadcrumbs %}
+
+{% block content %}
+
+  <!-- [ Main Content ] start -->
+  <div class="row">
+    
+    <!--[ daily sales section ] start-->
+    
+    <!--[ daily sales section ] end-->
+    <!--[ Monthly  sales section ] starts-->
+   
+    <!--[ Monthly  sales section ] end-->
+    <!--[ year  sales section ] starts-->
+    
+    <!--[ year  sales section ] end-->
+    <!--[ Recent Users ] start-->
+    <div class="col-xl-8 col-md-6">
+      <div class="card Recent-Users">
+
+        {% if products %}
+          <div class="card-header">
+            <h5>Products</h5>
+          </div>
+          <div class="card-block px-0 py-3">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Info</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for p in products %}
+                    <tr class="unread">
+                      <td>{{ p.name }}</td>
+                      <td>{{ p.info }}</td>
+                      <td>${{ p.price }}</td>
+                      <td>
+                        <a href="#" class="btn btn-primary">View</a>
+                        <a href="#" class="btn btn-danger">Delete</a>
+                        <!-- Add replay button -->
+                        <button class="btn btn-success" onclick="replay('{{ p.id }}')">Replay</button>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        {% else %}
+          <!-- Display notification about connected agents -->
+          <div class="alert alert-info">
+            <strong>No products available!</strong> There are currently no products in the database.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    <!--[ Recent Users ] end-->
+
+    <!-- [ statistics year chart ] start -->
+    <div class="col-xl-4 col-md-6">
+      <!-- Display badge for number of connected agents -->
+      <div class="card">
+        <div class="card-block border-bottom">
+          <div class="row d-flex align-items-center">
+            <div class="col-auto">
+              <i class="feather icon-zap f-30 text-c-green"></i>
+            </div>
+            <div class="col">
+              <!-- Use Django template variable to display number of connected agents -->
+              <h3 class="f-w-300">{{ num_connected_agents }}</h3>
+              <span class="d-block text-uppercase">Connected Agents</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ statistics year chart ] end -->
+    <!--[social-media section] start-->
+    
+    <!--[social-media section] end-->
+    <!-- [ rating list ] starts-->
+    
+    <!-- [ rating list ] end-->
+    <div class="col-xl-8 col-md-12 m-b-30">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="false">Today</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active show" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+            aria-controls="profile" aria-selected="true">This
+            Week</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+            aria-controls="contact" aria-selected="false">All</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Activity</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th class="text-right"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;"
+                      src="{% static 'assets/images/user/avatar-1.jpg' %}" alt="activity-user">PC de chayma</h6>
+                </td>
+                <td>
+                  <h6 class="m-0">The quick brown fox</h6>
+                </td>
+                <td>
+                  <h6 class="m-0">3:28 PM</h6>
+                </td>
+                <td>
+                  <h6 class="m-0 text-c-green">Done</h6>
+                </td>
+                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i>
+                </td>
+              </tr>
+
+              <tr>
+                <td>
+                  <h6 class="m-0"><img class="rounded-circle  m-r-10" style="width:40px;"
+                      src="{% static 'assets/images/user/avatar-2.jpg' %}" alt="activity-user">PC de chayma</h6>
+                </td>
+                <td>
+                  <h6 class="m-0">Jumps over the lazy</h6>
+                </td>
+                <td>
+                  <h6 class="m-0">2:37 PM</h6>
+                </td>
+                <td>
+                  <h6 class="m-0 text-c-red">Missed</h6>
+                </td>
+                <td class="text-right"><i class="fas fa-circle text-c-red f-10"></i>
+                </td>
+              </tr>
+              <!-- Add more rows as needed -->
+            </tbody>
+          </table>
+
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Activity</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th class="text-right"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Add more rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- [ Main Content ] end -->
+
+  <!-- JavaScript function to handle replay -->
+  <script>
+    function replay(productId) {
+      // Send HTTP POST request to initiate replay for the product with given ID
+      // You can implement this functionality using AJAX or any other method you prefer
+      // For demonstration purposes, let's log the ID to console
+      console.log("Replay initiated for product with ID:", productId);
+    }
+  </script>
+
+{% endblock content %}

@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  agent:
+    build: ./agent  # Path to the Dockerfile for the agent
+    container_name: network_agent_dev
+    restart: always
+    volumes:
+      - ./agent:/app  # Mount agent code into the container
+    environment:
+      - DEBUG=true  # Example environment variable for enabling debug mode
+
+  dashboard:
+    build: ./dashboard  # Path to the Dockerfile for the dashboard
+    container_name: dashboard_app_dev
+    restart: always
+    ports:
+      - "80:80"  # Map host port 80 to container port 80
+    volumes:
+      - ./dashboard:/usr/share/nginx/html  # Mount dashboard code into the Nginx container
+    environment:
+      - NODE_ENV=development  # Example environment variable for setting Node.js environment to development
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:7.15.1  # Example image for Filebeat
+    container_name: filebeat_container_dev
+    restart: always
+    volumes:
+      - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml  # Mount Filebeat configuration
+    environment:
+      - DEBUG=true  # Example environment variable for enabling debug mode
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.15.1  # Example image for Logstash
+    container_name: logstash_container_dev
+    restart: always
+    volumes:
+      - ./logstash/logstash.yml:/usr/share/logstash/config/logstash.yml  # Mount Logstash configuration
+    environment:
+      - LOGSTASH_DEBUG=true  # Example environment variable for enabling debug mode in Logstash
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_container_dev
+    restart: always
+    ports:
+      - "8080:80"  # Map host port 8080 to container port 80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf  # Mount Nginx configuration
+    environment:
+      - NGINX_DEBUG=true  # Example environment variable for enabling debug mode in Nginx
+
+  suricata:
+    image: suricata/suricata:latest
+    container_name: suricata_container_dev
+    restart: always
+    cap_add:
+      - NET_ADMIN  # Add NET_ADMIN capability for Suricata
+    volumes:
+      - ./suricata/suricata.yaml:/etc/suricata/suricata.yaml  # Mount Suricata configuration
+    environment:
+      - SURICATA_DEBUG=true  # Example environment variable for enabling debug mode in Suricata
