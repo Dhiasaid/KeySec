@@ -7,6 +7,10 @@ from pathlib import Path
 from dotenv import load_dotenv
 from str2bool import str2bool
 
+ELASTICSEARCH_HOST = 'localhost'
+ELASTICSEARCH_PORT = 9200
+
+
 load_dotenv()  # take environment variables from .env.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -44,6 +48,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_elasticsearch_dsl",
+    "search.apps.SearchConfig",
 
     "home",
 
@@ -165,14 +171,14 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # ### DYNAMIC_DATATB Settings ###
 DYNAMIC_DATATB = {
     # SLUG -> Import_PATH 
-    'product': "home.models.Product",
+    'Agents': "home.models.Product",
 }
 ########################################
 
 # ### API-GENERATOR Settings ###
 API_GENERATOR = {
     # SLUG -> Import_PATH 
-    'product': "home.models.Product",
+    'Agents': "home.models.Product",
 }
 
 REST_FRAMEWORK = {
@@ -182,4 +188,12 @@ REST_FRAMEWORK = {
     ],
 }
 
+
+ELASTICSEARCH_DSL = {
+    "default": {
+        "hosts": "https://localhost:9200",
+        "http_auth": ("elastic", "my-wKMjAT1p0XSn0e99T"),
+        "ca_certs": "PATH_TO_http_ca.crt",
+    }
+}
 

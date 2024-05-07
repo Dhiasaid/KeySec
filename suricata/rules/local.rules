@@ -1,0 +1,21 @@
+alert tcp any any -> $HOME_NET any (msg:"Potential TCP Port Scan"; \
+    flow:established, to_server; \
+    flags:S; \
+    threshold: type threshold, track by_src, count 5, seconds 60; \
+    sid:1000001; rev:1;)
+
+alert http any any -> any any (msg:"Malware infection detected"; content:"malicious_signature"; sid:100001; rev:1;)
+
+alert http any any -> any any (msg:"Potential data breach detected"; content:"confidential_data"; sid:100002; rev:1;)
+
+alert http any any -> any any (msg:"Unauthorized data access detected"; content:"sensitive_data"; time:outside_office_hours; sid:100003; rev:1;)
+
+alert tcp any any -> any any (msg:"Suspicious behavior detected"; threshold:type limit, track by_src, count 10, seconds 60; sid:100004; rev:1;)
+
+alert ip any any -> any any (msg:"Possible DoS attack detected"; threshold:type threshold, track by_dst, count 100, seconds 10; sid:100005; rev:1;)
+
+alert tcp any any -> any any (msg:"Command and control communication detected"; content:"botnet_signature"; sid:100006; rev:1;)
+
+alert tcp any any -> any any (msg:"Potential data leakage detected"; content:"sensitive_data"; sid:100007; rev:1;)
+
+alert http any any -> any any (msg:"Potential phishing attempt detected"; content:"phishing_url"; sid:100008; rev:1;)

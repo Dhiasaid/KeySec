@@ -3,7 +3,7 @@ from rest_framework import serializers
 
 try:
 
-    from home.models import Product
+    from home.models import Agents
 
 except:
     pass 
@@ -12,7 +12,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
 
         try:
-            model = Product
+            model = Agents
         except:
             pass    
         fields = '__all__'
